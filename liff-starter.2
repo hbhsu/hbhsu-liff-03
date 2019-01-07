@@ -1,0 +1,242 @@
+
+window.onload = function (e) {
+    liff.init(function (data) {
+        initializeApp(data);
+    });
+};
+
+function initializeApp(data) {
+	 var lat=0;
+   var lon=0;
+    document.getElementById('languagefield').textContent = data.language;
+    document.getElementById('viewtypefield').textContent = data.context.viewType;
+    document.getElementById('useridfield').textContent = data.context.userId;
+    document.getElementById('utouidfield').textContent = data.context.utouId;
+    document.getElementById('roomidfield').textContent = data.context.roomId;
+    document.getElementById('groupidfield').textContent = data.context.groupId;
+    /**
+ * Click handler to init the camera grab
+ */
+       
+    document.getElementById('enablecamerabutton').addEventListener('click', function () {
+    	getCamera();
+    });
+     
+/*     
+    navigator.geolocation.getCurrentPosition(showMap);
+
+        
+    function showMap(position) {
+      // Show a map centered at (position.coords.latitude, position.coords.longitude).
+       alert("test2");
+      lat=position.coords.latitude;
+      lon=position.coords.longitude;
+    }
+*/
+  // onSuccess Callback
+    // This method accepts a Position object, which contains the
+    // current GPS coordinates
+    //
+    var onSuccess = function(position) {
+    	/*
+        alert('Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');
+      */
+      alert('2');
+              lat=position.coords.latitude;
+              lon=position.coords.longitude;
+              
+    };
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  
+    // openWindow call
+    document.getElementById('openwindowbutton').addEventListener('click', function () {
+        liff.openWindow({
+            url: 'https://line.me'
+        });
+    });
+
+    // closeWindow call
+    document.getElementById('closewindowbutton').addEventListener('click', function () {
+        liff.closeWindow();
+    });
+
+ 
+    
+    // sendMessages call
+    document.getElementById('sendmessagebutton').addEventListener('click', function () {
+    	  
+        liff.sendMessages([
+        {
+            type: 'text',
+            text: "§A¦n" 
+        },
+        {
+            type: 'location',
+            title: 'location',           
+            latitude: lat,
+            longitude: lon                        
+        }, 
+/*        
+{  
+   "type":"uri",
+   "label":"https://example.com/",
+   "linkUri":"https://example.com/",
+   "area":{  
+      "x":0,
+      "y":0,
+      "width":300,
+      "height":400
+   }
+},      
+*/    
+/*
+{
+  "type": "imagemap",
+  "baseUrl": "https://example.com/bot/images/rm001",
+  "altText": "This is an imagemap",
+  "baseSize": {
+      "width": 1040,
+      "height": 1040
+  },
+  "video": {
+      "originalContentUrl": "https://example.com/video.mp4",
+      "previewImageUrl": "https://example.com/video_preview.jpg",
+      "area": {
+          "x": 0,
+          "y": 0,
+          "width": 1040,
+          "height": 585
+      },
+      "externalLink": {
+          "linkUri": "https://example.com/see_more.html",
+          "label": "See More"
+      }
+  },
+  "actions": [
+      {
+          "type": "uri",
+          "linkUri": "https://example.com/",
+          "area": {
+              "x": 0,
+              "y": 586,
+              "width": 520,
+              "height": 454
+          }
+      },
+      {
+          "type": "message",
+          "text": "Hello",
+          "area": {
+              "x": 520,
+              "y": 586,
+              "width": 520,
+              "height": 454
+          }
+      }
+  ]
+},
+*/
+            
+ /*        
+         {         
+               "type": "video",
+               "duration": 60000,
+               "contentProvider": {
+               "type": "external",
+               "originalContentUrl": "https://example.com/original.mp4",
+               "previewImageUrl": "https://example.com/preview.jpg"
+               }
+          },      
+          {
+              "type": "template",
+               "altText": "This is a buttons template",
+               "template": {
+                "type": "buttons",
+                "thumbnailImageUrl": "https://example.com/bot/images/image.jpg",
+                "imageAspectRatio": "rectangle",
+                "imageSize": "cover",
+                "imageBackgroundColor": "#FFFFFF",
+                 "title": "Menu",
+                 "text": "Please select",
+                 "defaultAction": {
+                 "type": "uri",
+                 "label": "View detail",
+                 "uri": "http://example.com/page/123"
+                 },
+                 "actions": [
+                  {
+                   "type": "postback",
+                   "label": "Buy",
+                   "data": "action=buy&itemid=123"
+                  },
+                  {
+                    "type": "postback",
+                     "label": "Add to cart",
+                     "data": "action=add&itemid=123"
+                  },
+                  {
+                  "type": "uri",
+                  "label": "View detail",
+                  "uri": "http://example.com/page/123"
+                   }
+                  ]
+                }
+        },                                     
+*/          
+        { 
+            type: 'sticker',
+            packageId: '2',
+            stickerId: '144'
+        }       
+        ]).then(function () {
+            window.alert("Message sent");
+        }).catch(function (error) {
+            window.alert("Error sending message: " + error);
+        });
+    });
+    //get profile call
+    document.getElementById('getprofilebutton').addEventListener('click', function () {
+        liff.getProfile().then(function (profile) {
+            document.getElementById('useridprofilefield').textContent = profile.userId;
+            document.getElementById('displaynamefield').textContent = profile.displayName;
+
+            var profilePictureDiv = document.getElementById('profilepicturediv');
+            if (profilePictureDiv.firstElementChild) {
+                profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
+            }
+            var img = document.createElement('img');
+            img.src = profile.pictureUrl;
+            img.alt = "Profile Picture";
+            profilePictureDiv.appendChild(img);
+
+            document.getElementById('statusmessagefield').textContent = profile.statusMessage;
+            toggleProfileData();
+        }).catch(function (error) {
+            window.alert("Error getting profile: " + error);
+        });
+    });
+}
+
+function toggleProfileData() {
+    var elem = document.getElementById('profileinfo');
+    if (elem.offsetWidth > 0 && elem.offsetHeight > 0) {
+        elem.style.display = "none";
+    } else {
+        elem.style.display = "block";
+    }
+}
