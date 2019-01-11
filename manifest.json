@@ -1,18 +1,11 @@
 {
-  "name": "Camera Capture Sample",
-  "version": "2",
-  "manifest_version": 2,
-  "icons": {
-    "16": "camera.png",
-    "128": "camera.png"
-  },
-  "app": {
-    "background": {
-      "scripts": ["background.js"]
-    }
-  },
-  "permissions": [
-    "audioCapture",
-    "videoCapture"
-  ]
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "CordovaCamera",
+  "short_name": "CordovaCamera",
+  "version": "io.cordova.hellocordova",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "author": "Apache Cordova Team",
+  "icons": [],
+  "start_url": "index.html"
 }
